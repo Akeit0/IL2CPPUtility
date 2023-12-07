@@ -1,19 +1,16 @@
 using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using UnityEngine.Scripting;
 
 namespace IL2CPPUtility {
     
-    
+    [Preserve]
     public static unsafe partial class Il2CppApi {
-
-        public const string AssemblyName =
-#if UNITY_IOS||UNITY_WEBGL
-            "__Internal";
-#else
-            "GameAssembly";
-#endif 
-     [DllImport(AssemblyName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+        public const string AssemblyName = "__Internal";
+        
+        
+    [DllImport(AssemblyName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
 
     public static extern void il2cpp_init(void* domain_name);
 
@@ -48,13 +45,13 @@ namespace IL2CPPUtility {
     public static extern void il2cpp_set_memory_callbacks(void* callbacks);
 
     [DllImport(AssemblyName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    public static extern void* il2cpp_get_corlib();
+    public static extern Il2CppImageHandle il2cpp_get_corlib();
 
     [DllImport(AssemblyName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
     public static extern void il2cpp_add_internal_call(void* name, Il2CppMethodPointer method);
 
-    [DllImport(AssemblyName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    public static extern Il2CppMethodInfoHandle il2cpp_resolve_icall([MarshalAs(UnmanagedType.LPStr)] string name);
+    [DllImport(AssemblyName,CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+    public static extern Il2CppMethodPointer il2cpp_resolve_icall([MarshalAs(UnmanagedType.LPStr)] string name);
 
     [DllImport(AssemblyName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
     public static extern void* il2cpp_alloc(uint size);
@@ -183,21 +180,21 @@ namespace IL2CPPUtility {
 
     [DllImport(AssemblyName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
     [return: MarshalAs(UnmanagedType.I1)]
-    public static extern bool il2cpp_class_is_blittable(void* klass);
+    public static extern bool il2cpp_class_is_blittable(Il2CppClassHandle klass);
 
     [DllImport(AssemblyName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    public static extern int il2cpp_class_get_flags(void* klass);
-
-    [DllImport(AssemblyName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    [return: MarshalAs(UnmanagedType.I1)]
-    public static extern bool il2cpp_class_is_abstract(void* klass);
+    public static extern int il2cpp_class_get_flags(Il2CppClassHandle klass);
 
     [DllImport(AssemblyName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
     [return: MarshalAs(UnmanagedType.I1)]
-    public static extern bool il2cpp_class_is_interface(void* klass);
+    public static extern bool il2cpp_class_is_abstract(Il2CppClassHandle klass);
 
     [DllImport(AssemblyName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    public static extern int il2cpp_class_array_element_size(void* klass);
+    [return: MarshalAs(UnmanagedType.I1)]
+    public static extern bool il2cpp_class_is_interface(Il2CppClassHandle klass);
+
+    [DllImport(AssemblyName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+    public static extern int il2cpp_class_array_element_size(Il2CppClassHandle klass);
 
     [DllImport(AssemblyName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
     public static extern Il2CppClassHandle il2cpp_class_from_type(Il2CppTypeHandle type);
@@ -206,7 +203,7 @@ namespace IL2CPPUtility {
     public static extern Il2CppTypeHandle il2cpp_class_get_type(Il2CppClassHandle klass);
 
     [DllImport(AssemblyName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    public static extern uint il2cpp_class_get_type_token(void* klass);
+    public static extern uint il2cpp_class_get_type_token(Il2CppClassHandle klass);
 
     [DllImport(AssemblyName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
     [return: MarshalAs(UnmanagedType.I1)]
@@ -368,22 +365,22 @@ namespace IL2CPPUtility {
     [DllImport(AssemblyName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
     public static extern void il2cpp_gchandle_free(uint gchandle);
     
-#if !UNITY_WEBGL
-
-    [DllImport(AssemblyName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    public static extern void* il2cpp_unity_liveness_calculation_begin(void* filter, int max_object_count,
-        void* callback, void* userdata, void* onWorldStarted, void* onWorldStopped);
-
-
-    [DllImport(AssemblyName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    public static extern void il2cpp_unity_liveness_calculation_end(void* state);
-
-    [DllImport(AssemblyName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    public static extern void il2cpp_unity_liveness_calculation_from_root(void* root, void* state);
-
-    [DllImport(AssemblyName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    public static extern void il2cpp_unity_liveness_calculation_from_statics(void* state);
-#endif
+// #if !UNITY_WEBGL
+//
+//     [DllImport(AssemblyName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+//     public static extern void* il2cpp_unity_liveness_calculation_begin(void* filter, int max_object_count,
+//         void* callback, void* userdata, void* onWorldStarted, void* onWorldStopped);
+//
+//
+//     [DllImport(AssemblyName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+//     public static extern void il2cpp_unity_liveness_calculation_end(void* state);
+//
+//     [DllImport(AssemblyName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+//     public static extern void il2cpp_unity_liveness_calculation_from_root(void* root, void* state);
+//
+//     [DllImport(AssemblyName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+//     public static extern void il2cpp_unity_liveness_calculation_from_statics(void* state);
+// #endif
 
     [DllImport(AssemblyName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
     public static extern Il2CppTypeHandle il2cpp_method_get_return_type(Il2CppMethodInfoHandle method);
@@ -553,7 +550,7 @@ namespace IL2CPPUtility {
 
     [DllImport(AssemblyName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
     public static extern Il2CppStringHandle il2cpp_string_is_interned(Il2CppStringHandle str);
-#if !UNITY_WEBGL
+
     [DllImport(AssemblyName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
     public static extern void* il2cpp_thread_current();
 
@@ -597,7 +594,7 @@ namespace IL2CPPUtility {
 
     [DllImport(AssemblyName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
     public static extern int il2cpp_thread_get_stack_depth(void* thread);
-#endif
+
     [DllImport(AssemblyName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
     public static extern Il2CppReflectionTypeHandle  il2cpp_type_get_object(Il2CppTypeHandle type);
 
@@ -665,22 +662,27 @@ namespace IL2CPPUtility {
     public static extern void il2cpp_unity_install_unitytls_interface(void* unitytlsInterfaceStruct);
 
     [DllImport(AssemblyName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    public static extern void* il2cpp_custom_attrs_from_class(Il2CppClassHandle klass);
+    public static extern Il2CppCustomAttrInfoHandle il2cpp_custom_attrs_from_class(Il2CppClassHandle klass);
 
     [DllImport(AssemblyName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    public static extern void* il2cpp_custom_attrs_from_method(Il2CppMethodInfoHandle method);
+    public static extern Il2CppCustomAttrInfoHandle il2cpp_custom_attrs_from_method(Il2CppMethodInfoHandle method);
 
     [DllImport(AssemblyName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    public static extern void* il2cpp_custom_attrs_get_attr(void* ainfo, void* attr_klass);
+    public static extern void* il2cpp_custom_attrs_get_attr(Il2CppCustomAttrInfoHandle ainfo, Il2CppClassHandle attr_klass);
 
     [DllImport(AssemblyName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
     [return: MarshalAs(UnmanagedType.I1)]
-    public static extern bool il2cpp_custom_attrs_has_attr(void* ainfo, void* attr_klass);
+    public static extern bool il2cpp_custom_attrs_has_attr(Il2CppCustomAttrInfoHandle ainfo, Il2CppClassHandle attr_klass);
 
     [DllImport(AssemblyName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    public static extern void* il2cpp_custom_attrs_construct(void* cinfo);
+    public static extern void* il2cpp_custom_attrs_construct(Il2CppCustomAttrInfoHandle cinfo);
 
     [DllImport(AssemblyName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    public static extern void il2cpp_custom_attrs_free(void* ainfo);
+    public static extern void il2cpp_custom_attrs_free(Il2CppCustomAttrInfoHandle ainfo);
+    
+    // [DllImport(AssemblyName, EntryPoint = "StringUtils::Utf16ToUtf8",CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+    // public static extern void Utf16ToUtf8(Il2CppStringHandle s);
+
+    
     }
 }

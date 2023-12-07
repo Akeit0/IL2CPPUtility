@@ -35,11 +35,11 @@ namespace IL2CPPUtility {
         /// <summary>
         /// Invoke without any check.
         /// If obj or args is value type, you should pass the address of the value.
-        /// If obj or args is reference (e.g. class, ref), you should pass  a value of the reference.
+        /// If obj or args is reference (e.g. class, ref), you should pass the reference it's self.
         /// </summary>
-        /// <param name="obj">Invoke Instance</param>
-        /// <param name="args">Invoke arguments</param>
-        /// <param name="returnValue">return target</param>
+        /// <param name="obj">Invoke Instance reference</param>
+        /// <param name="args">Invoke argument references</param>
+        /// <param name="returnValue">return target reference</param>
         public void InvokeUnsafe(void* obj, void** args, void* returnValue) {
             Value->invoker_method(Value->methodPointer, Value, obj, args, returnValue);
         }

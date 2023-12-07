@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Unity.Collections.LowLevel.Unsafe;
 
@@ -14,11 +15,9 @@ namespace IL2CPPUtility {
             Value = (Il2CppObject*) UnsafeUtility.As<object, IntPtr>(ref o);
         }
 
-        public ref object CSObject {
-            get {
-                var p = (IntPtr*) UnsafeUtility.AddressOf(ref this);
-                return ref UnsafeUtility.As<IntPtr, object>(ref p[0]);
-            }
+        public  object CSObject {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnsafeUtility.As<Il2CppObjectHandle, object>(ref this);
         }
 
         public override string ToString() => CSObject.ToString();
